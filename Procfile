@@ -1,0 +1,1 @@
+web: gunicorn arristi.wsgi --log-file -
