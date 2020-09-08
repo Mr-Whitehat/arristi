@@ -2,7 +2,7 @@
 {% block title %}
 Blog Post. I am blogpost!
 {% endblock %}
-{% block activeblogpost %} active{% endblock %}
+{% block color %}red{% endblock %}
 {% block css %}{% endblock %}
 {% block body %}
 <div class="container">
@@ -10,16 +10,16 @@ Blog Post. I am blogpost!
         <div class="row">
             <div class="col-md-8 blog-main">
                 <h3 class="pb-4 mb-4 font-italic border-bottom">
-                    Title
+                    {{post.title}}
                 </h3>
                 <div class="blog-post">
-                    <h2 class="blog-post-title">Heading0 content</h2>
-                    <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-                    <p>Heading0 content</p>
-                    <h2>Heading1</h2>
-                    <p>Heading1 content</p>
-                    <h3>Heading2</h3>
-                    <p>Heading2 content</p>
+                    <h2 class="blog-post-title">{{post.head0}}</h2>
+                    <p class="blog-post-meta">{{post.pub_date}} by <a href="#">Mark</a></p>
+                    <p>{{post.chead0}}</p>
+                    <h2>{{post.head1}}</h2>
+                    <p>{{post.chead1}}</p>
+                    <h3>{{post.head2}}</h3>
+                    <p>{{post.chead2}}</p>
                     
                     
                 </div><!-- /.blog-post -->                              
@@ -27,7 +27,7 @@ Blog Post. I am blogpost!
             <aside class="col-md-4 blog-sidebar">
                 <div class="p-4 mb-3 bg-light rounded">
                     <h4 class="font-italic">About</h4>
-                    <p class="mb-0">MyAwesomeCart is an <em>e - commerce website</em>. You can use it to buy and search for items online.</p>
+                    <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it to check the strength of your password.</p>
                 </div>
                 <div class="p-4">
                     <h4 class="font-italic">Contact Us On:</h4>

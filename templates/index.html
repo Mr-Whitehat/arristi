@@ -1,16 +1,23 @@
 {% extends 'basic.html' %}
 {% block css %}{% endblock %}
+{% block color %}red{% endblock %}
 {% block body %}
 {% load static %}
-
-<div class="container my-4 mx-4">
-    <form>
-        <div class="form-group" style="width:700px; padding-left:220px;">
-            <center><img src="{%static 'arristi/arristi-img.jpeg' %}" style="margin-top:100px; margin-bottom:-100px;" class="img-fluid"></center>
-            <h3 class="my-4" style="text-align: center; padding-top:100px;">Check Your Password Strength</h3>
-            <textarea class="form-control badge-pill" id="exampleFormControlTextarea1" rows="1" placeholder="Enter your password here"></textarea>
-        </div>
-    </form>
-    <center><button type="submit" class="btn btn-danger">Password Strength</button></center>
-</div>
+<center>
+    <div class="container my-4 mx-4">
+        <form>
+            <div class="form-group" style="width:700px;">
+                <center><img src="{%static 'arristi/arristi-img.jpeg' %}"
+                             style="margin-top:100px; margin-bottom:-100px;" class="img-fluid"></center>
+                <h3 class="my-4" style="text-align: center; padding-top:100px;">Check Your Password Strength</h3>
+                <textarea class="form-control badge-pill" id="exampleFormControlTextarea1" rows="1"
+                          placeholder="Enter your password here"></textarea>
+            </div>
+        </form>
+        <center>
+            <button type="submit" class="btn btn-danger">Password Strength</button>
+        </center>
+    </div>
+</center>
+<br><br>
 {% endblock %}

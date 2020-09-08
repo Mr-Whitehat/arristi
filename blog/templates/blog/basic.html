@@ -33,15 +33,13 @@
         </ul>
         <ul class="navbar-nav mr-5">
             <li class="nav-item {% block activeblog %} {% endblock %}">
-                <a class="nav-link" href="/blog">Blog</a>
-            </li>
-            <li class="nav-item {% block activeblogpost %} {% endblock %}">
-                <a class="nav-link" href="/blog/blogpost">Blog Post</a>
+                <a class="nav-link" style="color:{% block color %} {% endblock %}" href="/blog"><b>Blog</b></a>
             </li>
         </ul>
     </div>
 </nav>
 {% block body %} {% endblock %}
+
 <br><br><br><br><br><br>
 <footer class="blog-footer">
     <p>© 2020 <a href="/">Arristi.in</a>, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a>
