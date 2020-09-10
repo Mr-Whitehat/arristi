@@ -11,7 +11,8 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Arristi . Check the strength of your password! Explore AI, Ethical Hacking Skills</title>
 
-<!--    <link rel="shortout icon" type="image/x-icon" href="{%static 'arristi/favicon.ico'%}"/>-->
+    <link rel="shortout icon" type="image/x-icon" href="{%static 'arristi/favicon.ico'%}"/>
+    {% block head %} {% endblock %}
     <style>
         {% block css %} {% endblock %}
       .blog-footer {
@@ -63,6 +64,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+
+{% block js %} {% endblock %}
 </body>
 
 </html>

@@ -4,7 +4,7 @@ from .models import Blogpost
 def index(request):
     post = Blogpost.objects.all()
     print(post)
-    return render(request, 'blog/index.html',{'post': post})
+    return render(request, 'blog/index.html', {'post': post})
 
 def blogpost(request,id):
     post = Blogpost.objects.filter(post_id=id)[0]
