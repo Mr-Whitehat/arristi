@@ -1,7 +1,5 @@
 {% extends 'blog/basic.html'%}
-{% block title %}
-Blog . I am blog!
-{% endblock %}
+{% block title %}Blogs . All blogs from Arristi.in{% endblock %}
 {% block activeblog %} active {% endblock %}
 {% block color %}blue{% endblock %}
 {% block css %}{% endblock %}
@@ -10,30 +8,31 @@ Blog . I am blog!
 
 <div class="container mt-3">
 
-
-    <div class="row my-2">
-        {% for item in post %}
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">{{item.title|slice:35}}..</strong>
-                    <h3 class="mb-0">{{item.head0|slice:35}}..</h3>
-                    <div class="mb-1 text-muted">{{item.pub_date}}</div>
-                    <p class="card-text mb-auto">{{item.chead0|slice:100}}..</p>
-                    <a href="/blog/blogpost/{{item.post_id}}" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <img src="/media/{{item.thumbnail}}" width="200" height="250">
-                </div>
-            </div>
+    <div class="card my-3">
+        <img src="/media/blog/images/ai1a.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Artificial Intelligence (AI)</h5>
+            <p class="card-text">Artificial intelligence (AI) refers to the simulation of human
+                intelligence in machines that are programmed to think like humans and mimic their
+                actions. The term may also be applied to any machine that exhibits traits associated
+                with a human mind such as learning and problem-solving.</p>
+            <a href="/blog/ai"><button class="btn btn-primary">AI Blogs</button></a>
+            <p class="card-text"><small class="text-muted">Last updated 3 hours ago</small></p>
         </div>
-        {% if forloop.counter|divisibleby:2 %}
     </div>
-    <div class="row my-2">
-        {% endif%}
-        {% endfor %}
 
+    <div class="card my-3">
+        <img src="/media/blog/images/ethical1.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Cyber Security</h5>
+            <p class="card-text">Cyber security is the practice of defending computers, servers,
+                mobile devices, electronic systems, networks, and data from malicious attacks. It's
+                also known as information technology security or electronic information security.</p>
+            <a href="/blog/ethical"><button class="btn btn-primary">Cyber Security Blogs</button></a>
+            <p class="card-text"><small class="text-muted">Last updated 3 hours ago</small></p>
+        </div>
     </div>
+
 </div>
 
 {% endblock %}
