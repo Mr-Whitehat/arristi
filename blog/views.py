@@ -20,7 +20,15 @@ def ethical(request):
 
 def blogpost(request,id):
     post = Blogpost.objects.filter(post_id=id)[0]
-    return render(request, 'blog/blogpost.html',{'post': post})
+    title = post.title;
+    print(title)
+    if post.category == 'cs':
+        link = 'ethical'
+        bCrumb = 'Ethical Hacking'
+    elif post.category == 'ai':
+        link = 'ai'
+        bCrumb = 'AI'
+    return render(request, 'blog/blogpost.html',{'post': post, 'bCrumb': bCrumb, 'link': link, 'title': title})
 
 # def index(request):
 #     post = Blogpost.objects.all()

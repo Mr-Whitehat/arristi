@@ -6,6 +6,16 @@
 {% block css %}{% endblock %}
 {% block body %}
 <div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Arristi.in</a></li>
+            <li class="breadcrumb-item"><a href="/blog">Blogs</a></li>
+            <li class="breadcrumb-item"><a href="/blog/{{link}}">{{bCrumb}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{title|slice:10}} ...</li>
+        </ol>
+    </nav>
+
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8 blog-main">
