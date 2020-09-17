@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -9,14 +10,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>{% block title %}{% endblock %}</title>
+
+    <link rel="shortout icon" type="image/x-icon" href="{%static 'images/favicon.ico'%}"/>
+    {% block head %} {% endblock %}
     <style>
         {% block css %} {% endblock %}
+
+    html{
+    height: 100%;
+    }
+
+    body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    }
+
+    .content{
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    }
       .blog-footer {
     padding: 2.5rem 0;
     color: #999;
     text-align: center;
     background-color: #f9f9f9;
     border-top: .05rem solid #e5e5e5;
+    }
 
     </style>
 <!--    <div id="fb-root"></div>-->
@@ -35,14 +56,15 @@
         </ul>
         <ul class="navbar-nav mr-5">
             <li class="nav-item {% block activeblog %} {% endblock %}">
-                <a class="nav-link" style="color:{% block color %} {% endblock %}" href="/blog"><b>Blog</b></a>
+                <a class="nav-link" style="color:{% block color %} {% endblock %}" href="/blog"><b>Blogs</b></a>
             </li>
         </ul>
     </div>
 </nav>
+<div class="content">
 {% block body %} {% endblock %}
+</div>
 
-<br><br><br><br><br><br>
 <footer class="blog-footer">
     <p>© 2020 <a href="/">Arristi.in</a>, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a>
     </p>
@@ -62,6 +84,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-</body>
 
+{% block js %}{% endblock %}
+</body>
 </html>

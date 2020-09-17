@@ -6,11 +6,17 @@ def index(request):
 
 def ai(request):
     category = Blogpost.objects.filter(category='ai')
-    return render(request, 'blog/ai.html',{'category':category})
+    count = 0;
+    for i in category:
+        count += 1;
+    return render(request, 'blog/ai.html',{'category':category, 'nPosts': count})
 
 def ethical(request):
     category = Blogpost.objects.filter(category='cs')
-    return render(request, 'blog/ethical.html',{'category':category})
+    count = 0;
+    for i in category:
+        count += 1;
+    return render(request, 'blog/ethical.html',{'category':category, 'nPosts': count})
 
 def blogpost(request,id):
     post = Blogpost.objects.filter(post_id=id)[0]
@@ -19,5 +25,5 @@ def blogpost(request,id):
 # def index(request):
 #     post = Blogpost.objects.all()
 #     print(post)
-#     return render(request, 'blog/index.html', {'post': post})
+#     return render(request, 'blog/algo.html', {'post': post})
 
