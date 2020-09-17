@@ -24,7 +24,7 @@ def blogpost(request,id):
     print(title)
     if post.category == 'cs':
         link = 'ethical'
-        bCrumb = 'Ethical Hacking'
+        bCrumb = 'EH'
     elif post.category == 'ai':
         link = 'ai'
         bCrumb = 'AI'
