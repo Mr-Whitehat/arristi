@@ -1,9 +1,6 @@
-{% extends 'blog/basic.html'%}
-{% block title %}
-{{post.title}} from Arristi.in
-{% endblock %}
-{% block color %}red{% endblock %}
-{% block css %}{% endblock %}
+{% extends 'basic.html'%}
+{% block title %}{{post.title}} from Arristi.in{% endblock %}
+{% block blogcolor %}red{% endblock %}
 {% block body %}
 <div class="container">
 
@@ -12,7 +9,8 @@
             <li class="breadcrumb-item"><a href="/">Arristi.in</a></li>
             <li class="breadcrumb-item"><a href="/blog">Blogs</a></li>
             <li class="breadcrumb-item"><a href="/blog/{{link}}">{{bCrumb}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{title|slice:10}} ...</li>
+            <li class="breadcrumb-item active" aria-current="page">{{post.title|truncatechars:10}}</li>
+<!--            <li class="breadcrumb-item active" aria-current="page">{{title|slice:10}} ...</li>-->
         </ol>
     </nav>
 
@@ -23,7 +21,7 @@
                     {{post.title}}
                 </h3>
                 <div class="fb-like " data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
-                <p class="blog-post-meta pb-1 mb-4 border-bottom">{{post.pub_date}} by <a href="#">{{post.author}}</a></p>
+                <p class="blog-post-meta pb-1 mb-4 border-bottom">{{post.timeStamp}} by <a href="#">{{post.author}}</a></p>
 
                 <div class="blog-post">
 
@@ -31,7 +29,7 @@
                     {{post.content}}
                     {% endautoescape %}
 
-<!--                    <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-numposts="50" data-width=""></div>-->
+<!--                    Here will show Facebook Comments:-->
                     <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-numposts="2" data-width=""></div>
                     
                 </div><!-- /.blog-post -->                              

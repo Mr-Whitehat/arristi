@@ -1,8 +1,5 @@
-{% extends 'homebasic.html' %}
-{% block head %}
-{% load static %}
-<script src="{% static 'index.js' %}"></script>
-{% endblock %}
+{% extends 'basic.html' %}
+{% block head %}{% load static %}<script src="{% static 'index.js' %}"></script>{% endblock %}
 {% block css %}
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 *{
@@ -120,7 +117,7 @@ form .text.strong{
 }
 
 {% endblock %}
-{% block color %}red{% endblock %}
+{% block blogcolor %}red{% endblock %}
 {% block body %}
 {% load static %}
  <div class="container">

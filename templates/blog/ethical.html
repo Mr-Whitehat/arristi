@@ -1,19 +1,17 @@
-{% extends 'blog/basic.html'%}
-{% block title %} Artificial Intelligence Blogs . We are AI blogs! {% endblock %}
-{% block activeblog %} active {% endblock %}
-{% block color %}red{% endblock %}
-{% block css %}{% endblock %}
+{% extends 'basic.html'%}
+{% block title %}Cyber Security Blogs . All CS blogs from Arristi.in{% endblock %}
+{% block blogcolor %}red{% endblock %}
 
 {% block body %}
 
 <div class="container mt-3">
-    <h4>{{nPosts}} Artificial Intelligence Blogs</h4>
+    <h4>{{nPosts}} Ethical Hacking Blogs</h4>
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Arristi.in</a></li>
             <li class="breadcrumb-item"><a href="/blog">Blogs</a></li>
-            <li class="breadcrumb-item active" aria-current="page">AI</li>
+            <li class="breadcrumb-item active" aria-current="page">EH</li>
         </ol>
     </nav>
 
@@ -26,7 +24,7 @@
                     <h5 class="card-title">{{item.title|slice:35}}..</h5>
                     <div class="mb-1 text-muted">{{item.pub_date}}</div>
                     <p class="card-text">{{item.descForCard|slice:50}}..</p>
-                    <a href="/blog/blogpost/{{item.post_id}}" class="btn btn-primary">Continue reading</a>
+                    <a href="/blog/blogpost/{{item.slug}}" class="btn btn-primary">Continue reading</a>
                 </div>
             </div>
 

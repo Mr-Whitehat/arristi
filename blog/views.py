@@ -1,8 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from .models import Blogpost
 
 def index(request):
-    return render(request, 'blog/index.html')
+    return render(request, 'blog/bloghome.html')
+
+def blogslug(request,slug):
+    post = Blogpost.objects.all()
+    print(post)
+    print(len(post))
+    # if post.category == 'cs':
+    #     link = 'ethical'
+    #     bCrumb = 'EH'
+    # elif post.category == 'ai':
+    #     link = 'ai'
+    #     bCrumb = 'AI'
+    return render(request, 'blog/blogpost.html',{'post': post}) #, 'bCrumb': bCrumb, 'link': link})
 
 def ai(request):
     category = Blogpost.objects.filter(category='ai')
@@ -20,15 +32,16 @@ def ethical(request):
 
 def blogpost(request,id):
     post = Blogpost.objects.filter(post_id=id)[0]
-    title = post.title;
-    print(title)
+    # title = post.title;
+    slu = post.slug
+    print(slu)
     if post.category == 'cs':
         link = 'ethical'
         bCrumb = 'EH'
     elif post.category == 'ai':
         link = 'ai'
         bCrumb = 'AI'
-    return render(request, 'blog/blogpost.html',{'post': post, 'bCrumb': bCrumb, 'link': link, 'title': title})
+    return render(request, 'blog/blogpost.html',{'post': post, 'bCrumb': bCrumb, 'link': link})
 
 # def index(request):
 #     post = Blogpost.objects.all()

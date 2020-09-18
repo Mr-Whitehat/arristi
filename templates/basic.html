@@ -1,7 +1,6 @@
-{% load static %}
 <!doctype html>
 <html lang="en">
-
+{% load static %}
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,7 +10,8 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="shortout icon" type="image/x-icon" href="{%static 'images/favicon.ico'%}"/>
+    <link rel="shortout icon" type="image/x-icon" href="/media/favicon.ico"/>
+    <!--    {%static 'images/favicon.ico' %}-->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178235862-1"></script>
     <script>
@@ -20,7 +20,12 @@
          gtag('js', new Date());
 
          gtag('config', 'UA-178235862-1');
+
+
+
+
     </script>
+
     {% block head %} {% endblock %}
     <style>
         {% block css %} {% endblock %}
@@ -40,8 +45,8 @@
     flex-shrink: 0;
     flex-basis: auto;
     }
-      .blog-footer {
-    padding: 2.5rem 0;
+    .blog-footer {
+    padding: 1rem 0;
     color: #999;
     text-align: center;
     background-color: #f9f9f9;
@@ -53,6 +58,10 @@
     }
 
 
+
+
+
+
     </style>
     <!--    <div id="fb-root"></div>-->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0"
@@ -61,7 +70,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
-    <a href="/"><img class="brand-image" src="{%static 'images/arristi-icon.jpeg' %}"></a>&nbsp;&nbsp;
+    <a href="/"><img class="brand-image" src="/media/favicon.ico"></a>&nbsp;&nbsp;
     <a class="navbar-brand" href="/"><b>Arristi.in</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,18 +80,37 @@
         <ul class="navbar-nav mr-auto">
         </ul>
         <ul class="navbar-nav mr-5">
-            <li class="nav-item {% block activeblog %} {% endblock %}">
-                <a class="nav-link" style="color:{% block color %} {% endblock %}" href="/blog"><b>Blogs</b></a>
+            <li class="nav-item {% block activeblog %}{% endblock %}">
+                <a class="nav-link" style="color:{% block blogcolor %}{% endblock %}" href="/blog"><b>Blogs</b></a>
+            </li>
+            <li class="nav-item {% block activeabout %}{% endblock %}">
+                <a class="nav-link" style="color:{% block aboutcolor %}{% endblock %}" href="/about">About Us</a>
+            </li>
+            <li class="nav-item {% block activecontact %}{% endblock %}">
+                <a class="nav-link" style="color:{% block contactcolor %}{% endblock %}" href="/contact">Contact Us</a>
             </li>
         </ul>
     </div>
 </nav>
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} mb-0 alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+
 <div class="content">
     {% block body %} {% endblock %}
 </div>
 
 <footer class="blog-footer">
-    <p>© 2020 <a href="/">Arristi.in</a>, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a>
+    <p>
+        <a href="/about">About Us</a>&nbsp
+        <a href="/contact">Contact Us</a>
+    </p>
+    <p>© 2020 <a href="/"><b>Arristi.in</b></a>, Inc. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
     </p>
     <p>
         <a href="#">Back to top</a>

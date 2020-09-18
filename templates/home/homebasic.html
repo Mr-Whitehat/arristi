@@ -11,7 +11,8 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="shortout icon" type="image/x-icon" href="{%static 'images/favicon.ico'%}"/>
+    <link rel="shortout icon" type="image/x-icon" href="/media/blog/images/ai1.jpg"/>
+<!--    {%static 'images/favicon.ico' %}-->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178235862-1"></script>
     <script>
@@ -25,6 +26,7 @@
     {% block head %} {% endblock %}
     <style>
         {% block css %} {% endblock %}
+
     html{
     height: 100%;
     }
@@ -40,14 +42,13 @@
     flex-shrink: 0;
     flex-basis: auto;
     }
-
     .blog-footer {
     padding: 2.5rem 0;
     color: #999;
     text-align: center;
     background-color: #f9f9f9;
     border-top: .05rem solid #e5e5e5;
-}
+        }
     .brand-image
     {
     width: 30px;
@@ -58,7 +59,9 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
-    <a href="/"><img class="brand-image" src="{%static 'images/arristi-icon.jpeg' %}"></a>&nbsp;&nbsp;
+    <a href="/"><img class="brand-image" src="/media/blog/images/ai1.jpg"></a>&nbsp;&nbsp;
+<!--    {%static 'images/arristi-icon.jpeg' %}-->
+<!--    {%static 'images/arristi-img.jpeg' %}-->
     <a class="navbar-brand" href="/"><b>Arristi.in</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
