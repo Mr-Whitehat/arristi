@@ -25,6 +25,7 @@
 
 
 
+
     </script>
 
     {% block head %} {% endblock %}
@@ -64,6 +65,7 @@
 
 
 
+
     </style>
     <!--    <div id="fb-root"></div>-->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0"
@@ -93,11 +95,33 @@
             </li>
         </ul>
         <form action="/search" method="get" class="form-inline my-2 my-lg-0">
-            <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search"
+                   aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0"
                     type="submit">Search
             </button>
         </form>
+<!--        Login start-->
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login to Arristi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        Login End-->
 
     </div>
 </nav>
