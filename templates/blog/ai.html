@@ -16,14 +16,14 @@
     </nav>
 
     <div class="row my-2">
-        {% for item in category %}
+        {% for item in aiposts %}
         <div class="col-md-4 my-2">
             <div class="card" style="width: 18rem;">
-                <img src="/media/{{item.thumbnail}}" class="card-img-top" style="width: 18rem; height: 10rem;" alt="...">
+                <img src="/media/{{item.thumbnail}}" class="card-img-top" style="width: 18rem; height: 10rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{item.title|slice:35}}..</h5>
-                    <div class="mb-1 text-muted">{{item.pub_date}}</div>
-                    <p class="card-text">{{item.descForCard|slice:50}}..</p>
+                    <h5 class="card-title">{{item.title|truncatechars:35}}</h5>
+                    <div class="mb-1 text-muted">{{item.timeStamp}}</div>
+                    <p class="card-text">{{item.descForCard|truncatechars:50}}</p>
                     <a href="/blog/blogpost/{{item.slug}}" class="btn btn-primary">Continue reading</a>
                 </div>
             </div>
