@@ -1,0 +1,51 @@
+{% extends 'basic.html'%}
+{% block title %}Your search . Arristi.in {% endblock %}
+{% block blogcolor %}red{% endblock %}
+
+{% block body %}
+<div class="container mt-3" style="word-wrap: break-word;">
+
+    <h4>{{nPosts}} Search Result(s) found for {{query| truncatechars:25}} :-)</h4>
+
+    {% if matchedposts|length < 1 %}
+    <p><br><b>"Name"</b> (and any subsequent words) was ignored because we limit queries to 35 words.<br><br>
+    Your search query - <b>{{query| truncatechars:80}}</b> - did not match any documents.<br><br></p>
+    Suggestions:<br><br>
+    <ul>
+        <li>Make sure that all words are spelled correctly.</li>
+        <li>Try different keywords.</li>
+        <li>Try more general keywords.</li>
+        <li>Try fewer keywords.</li>
+    </ul>
+    <br>
+    <h6>Your Full Searched Query:</h6>
+    <h5>{{query}}</h5>
+
+
+
+    {% endif %}
+
+    <div class="row my-2">
+        {% for item in matchedposts %}
+        <div class="col-md-4 my-2">
+            <div class="card" style="width: 18rem;">
+                <img src="/media/{{item.thumbnail}}" class="card-img-top" style="width: 18rem; height: 10rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.title|truncatechars:35}}</h5>
+                    <div class="mb-1 text-muted">{{item.timeStamp}}</div>
+                    <p class="card-text">{{item.descForCard|truncatechars:50}}</p>
+                    <a href="/blog/blogpost/{{item.slug}}" class="btn btn-primary">Continue reading</a>
+                </div>
+            </div>
+
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+    </div>
+    <div class="row my-2">
+        {% endif%}
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

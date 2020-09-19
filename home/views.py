@@ -2,6 +2,7 @@
 from django.shortcuts import render,HttpResponse
 from .models import Contact
 from django.contrib import messages
+from blog.models import Blogpost
 
 # Create your views here.
 def index(request):
@@ -24,6 +25,28 @@ def contact(request):
             contact.save()
             messages.success(request, "Success! Your query has been sent successfully.")
     return render(request, 'home/contact.html')
+
+def search(request):
+    query = request.GET['query']
+    if len(query)>80:
+        matchedposts = Blogpost.objects.none()
+    else:
+        matchedpoststitle = Blogpost.objects.filter(title__icontains=query)
+        matchedpostscontent = Blogpost.objects.filter(content__icontains=query)
+        matchedpostsauthor = Blogpost.objects.filter(author__icontains=query)
+        matchedpoststimeStamp = Blogpost.objects.filter(timeStamp__icontains=query)
+        print(matchedpoststimeStamp)
+        matchedpostscategory = Blogpost.objects.filter(category__icontains=query)
+        matchedpostsDesc = Blogpost.objects.filter(descForCard__icontains=query)
+        matchedposts = matchedpoststitle.union(matchedpostscontent).union(matchedpostsauthor).union(matchedpoststimeStamp).union(matchedpostscategory).union(matchedpostsDesc)
+
+    if matchedposts.count() ==0:
+        messages.warning(request, "No search found!")
+    count = 0
+    for i in matchedposts:
+        count += 1;
+    dic = {'matchedposts':matchedposts, 'nPosts': count, 'query':query}
+    return render(request, 'home/search.html', dic)
 
 def privacy(request):
     return render(request, 'home/privacy.html')

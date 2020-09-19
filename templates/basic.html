@@ -24,6 +24,7 @@
 
 
 
+
     </script>
 
     {% block head %} {% endblock %}
@@ -62,6 +63,7 @@
 
 
 
+
     </style>
     <!--    <div id="fb-root"></div>-->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0"
@@ -79,7 +81,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         </ul>
-        <ul class="navbar-nav mr-5">
+        <ul class="navbar-nav mr-0">
             <li class="nav-item {% block activeblog %}{% endblock %}">
                 <a class="nav-link" style="color:{% block blogcolor %}{% endblock %}" href="/blog"><b>Blogs</b></a>
             </li>
@@ -90,6 +92,13 @@
                 <a class="nav-link" style="color:{% block contactcolor %}{% endblock %}" href="/contact">Contact Us</a>
             </li>
         </ul>
+        <form action="/search" method="get" class="form-inline my-2 my-lg-0">
+            <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0"
+                    type="submit">Search
+            </button>
+        </form>
+
     </div>
 </nav>
 {% for message in messages %}
