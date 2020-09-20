@@ -25,7 +25,6 @@
 
 
 
-
     </script>
 
     {% block head %} {% endblock %}
@@ -47,6 +46,7 @@
     flex-shrink: 0;
     flex-basis: auto;
     }
+
     .blog-footer {
     padding: 1rem 0;
     color: #999;
@@ -54,15 +54,11 @@
     background-color: #f9f9f9;
     border-top: .05rem solid #e5e5e5;
     }
+
     .brand-image
     {
     width: 30px;
     }
-
-
-
-
-
 
 
 
@@ -94,34 +90,41 @@
                 <a class="nav-link" style="color:{% block contactcolor %}{% endblock %}" href="/contact">Contact Us</a>
             </li>
         </ul>
-        <form action="/search" method="get" class="form-inline my-2 my-lg-0">
+        <form action="/search" method="get" class="form-inline my-2 my-lg-0 mr-2">
             <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search"
                    aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0"
                     type="submit">Search
             </button>
         </form>
-<!--        Login start-->
-        <div class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Login to Arristi</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
+
+        <!--        Logic for showing Login/Logout button-->
+        {% if user.is_authenticated %}
+        <div class="nav-item dropdown">
+            <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span style="font-color: red;">Welcome <b>{{request.user| truncatechars:10}}</b></span>
             </div>
+            <form method="post" action="logout"> {% csrf_token %}
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="logout">
+                        <button type="submit" class="btn btn-success">Log Out</button>
+                    </a>
+                </div>
+            </form>
         </div>
-<!--        Login End-->
+
+        {% else %}
+        <!-- Button trigger Login modal -->
+        <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#login">
+            LogIn
+        </button>
+
+        <!-- Button trigger signup modal -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#signup">
+            SignUp
+        </button>
+        {% endif %}
 
     </div>
 </nav>
@@ -133,6 +136,120 @@
     </button>
 </div>
 {% endfor %}
+
+<!-- Login Modal start-->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">LogIn to Arristi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/login" method="post"> {% csrf_token%}
+                    <div class="form-group">
+                        <label for="uname">Username</label>
+                        <input type="text" class="form-control" id="uname" name="uname"
+                               placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passw">Password</label>
+                        <input type="password" class="form-control" id="passw" name="passw"
+                               placeholder="Enter correct password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">LogIn</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--        Login Modal End-->
+
+<!-- signup Modal start-->
+<div class="modal fade" id="signup" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLabel">SignUp to Arristi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/signup" method="post"> {% csrf_token%}
+                    <div class="container">
+                        <h6>Follow instructions while filling the form:</h6>
+                        <ul>
+                            <li>Username must be under 30 characters.</li>
+                            <li>First name should only contains letters.</li>
+                            <li>Last name should only contains letters.</li>
+                            <li>Password must contains atleast 8 characters.</li>
+                            <li>Password must contains letters (capital & small), numbers & special characters.</li>
+                            <li>Password should match with Confirm Password.</li>
+
+                        </ul>
+                    </div>
+                    <!--                    <div class="nav-item dropdown">-->
+                    <!--                        <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button"-->
+                    <!--                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--                            Follow instructions while filling form-->
+                    <!--                        </div>-->
+                    <!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                    <!--                            <div class="dropdown-item">1. Username must be under 30 characters.</div>-->
+                    <!--                            <div class="dropdown-item">2. First name should only contains letters.</div>-->
+                    <!--                            <div class="dropdown-item">3. Last name should only contains letters.</div>-->
+                    <!--                            <div class="dropdown-item">4. Password must contains atleast 8 characters.</div>-->
+                    <!--                            <div class="dropdown-item" style="word-wrap: break-word;">5. Password must contains letters (capital & small), numbers & special characters.</div>-->
+                    <!--                            <div class="dropdown-item">6. Password should match with Confirm Password.</div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username"
+                               placeholder="Enter Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname"
+                               placeholder="Enter First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname"
+                               placeholder="Enter Last Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                               placeholder="name@example.com" required>
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email
+                            with anyone else. Promise!</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password1">Choose a strong Password</label>
+                        <input type="password" class="form-control" id="password1" name="password1"
+                               placeholder="Choose a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" class="form-control" id="password2" name="password2"
+                               placeholder="Enter password again" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">SignUp</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--        signup Modal End-->
 
 <div class="content">
     {% block body %} {% endblock %}
