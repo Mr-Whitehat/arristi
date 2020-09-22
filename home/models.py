@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.
 class Contact(models.Model):
@@ -8,7 +9,7 @@ class Contact(models.Model):
     phone = models.CharField(max_length=13)
     category = models.CharField(max_length=50)
     desc = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+    timestamp = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.name

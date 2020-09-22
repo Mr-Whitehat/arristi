@@ -25,6 +25,14 @@
 
 
 
+
+
+
+
+
+
+
+
     </script>
 
     {% block head %} {% endblock %}
@@ -59,6 +67,14 @@
     {
     width: 30px;
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -105,9 +121,9 @@
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span style="font-color: red;">Welcome <b>{{request.user| truncatechars:10}}</b></span>
             </div>
-            <form method="post" action="logout"> {% csrf_token %}
+            <form method="post" action="/logout"> {% csrf_token %}
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="logout">
+                    <a class="dropdown-item" href="#">
                         <button type="submit" class="btn btn-success">Log Out</button>
                     </a>
                 </div>
@@ -129,7 +145,7 @@
     </div>
 </nav>
 {% for message in messages %}
-<div class="alert alert-{{message.tags}} mb-0 alert-dismissible fade show" role="alert">
+<div class="alert alert-{{message.tags}} mb-2 alert-dismissible fade show " role="alert">
     <strong>{{message}}</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -163,6 +179,13 @@
 
                     <button type="submit" class="btn btn-primary">LogIn</button>
                 </form>
+                <div>
+                    <p>Have Not Arristi Account? &nbsp
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#signup">
+                            SignUp
+                        </button>
+                    </p>
+                </div>
 
             </div>
         </div>
@@ -184,31 +207,47 @@
 
                 <form action="/signup" method="post"> {% csrf_token%}
                     <div class="container">
-                        <h6>Follow instructions while filling the form:</h6>
-                        <ul>
-                            <li>Username must be under 30 characters.</li>
-                            <li>First name should only contains letters.</li>
-                            <li>Last name should only contains letters.</li>
-                            <li>Password must contains atleast 8 characters.</li>
-                            <li>Password must contains letters (capital & small), numbers & special characters.</li>
-                            <li>Password should match with Confirm Password.</li>
+                        <center>
+                            <button class="btn btn-warning mb-2" type="button" data-toggle="collapse"
+                                    data-target="#collapseExample" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                <b>Instructions -> "Click me"</b>
+                            </button>
+                        </center>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <ul>
+                                    <li>Username must be under 30 characters.</li>
+                                    <li>First name should only contains letters.</li>
+                                    <li>Last name should only contains letters.</li>
+                                    <li>Password must contains atleast 8 characters.</li>
+                                    <li>Password must contains letters (capital & small), numbers & special
+                                        characters.
+                                    </li>
+                                    <li>Password should match with Confirm Password.</li>
 
-                        </ul>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                    <!--                    <div class="container">-->
+                    <!--                        <h6>Follow instructions while filling the form:</h6>-->
+                    <!--                        <ul>-->
+                    <!--                            <li>Username must be under 30 characters.</li>-->
+                    <!--                            <li>First name should only contains letters.</li>-->
+                    <!--                            <li>Last name should only contains letters.</li>-->
+                    <!--                            <li>Password must contains atleast 8 characters.</li>-->
+                    <!--                            <li>Password must contains letters (capital & small), numbers & special characters.</li>-->
+                    <!--                            <li>Password should match with Confirm Password.</li>-->
+
+                    <!--                        </ul>-->
+                    <!--                    </div>-->
+
                     <!--                    <div class="nav-item dropdown">-->
                     <!--                        <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button"-->
                     <!--                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
                     <!--                            Follow instructions while filling form-->
                     <!--                        </div>-->
-                    <!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                    <!--                            <div class="dropdown-item">1. Username must be under 30 characters.</div>-->
-                    <!--                            <div class="dropdown-item">2. First name should only contains letters.</div>-->
-                    <!--                            <div class="dropdown-item">3. Last name should only contains letters.</div>-->
-                    <!--                            <div class="dropdown-item">4. Password must contains atleast 8 characters.</div>-->
-                    <!--                            <div class="dropdown-item" style="word-wrap: break-word;">5. Password must contains letters (capital & small), numbers & special characters.</div>-->
-                    <!--                            <div class="dropdown-item">6. Password should match with Confirm Password.</div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
 
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -251,8 +290,8 @@
 </div>
 <!--        signup Modal End-->
 
-<div class="content">
-    {% block body %} {% endblock %}
+<div class="content" style="margin-top: -20px;">
+{% block body %} {% endblock %}
 </div>
 
 <footer class="blog-footer">

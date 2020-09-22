@@ -19,9 +19,11 @@
         {% for item in aiposts %}
         <div class="col-md-4 my-2">
             <div class="card" style="width: 18rem;">
-                <img src="/media/{{item.thumbnail}}" class="card-img-top" style="width: 18rem; height: 10rem;">
+                <a class="text-dark" href="/blog/blogpost/{{item.slug}}">
+                    <img src="/media/{{item.thumbnail}}" class="card-img-top" style="width: 18rem; height: 10rem;"></a>
                 <div class="card-body">
-                    <h5 class="card-title">{{item.title|truncatechars:35}}</h5>
+                    <a class="text-dark" href="/blog/blogpost/{{item.slug}}">
+                        <h5 class="card-title">{{item.title|truncatechars:35}}</h5></a>
                     <div class="mb-1 text-muted">{{item.timeStamp}}</div>
                     <p class="card-text">{{item.descForCard|truncatechars:50}}</p>
                     <a href="/blog/blogpost/{{item.slug}}" class="btn btn-primary">Continue reading</a>

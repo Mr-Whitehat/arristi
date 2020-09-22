@@ -14,7 +14,3 @@ urlpatterns = [
     path('privacy', views.privacy, name='contact'),
     path('terms', views.terms, name='contact'),
 ]
-
-
-
-

@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+admin.site.index_title = "Welcome to Arristi Admin Panel" # change tab title, Page title simultaneously
+admin.site.site_title = "Arristi Admin Panel" # change tab title end title(it will show after index_title)
+admin.site.site_header = "Arristi Admin" # change navbar title
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),

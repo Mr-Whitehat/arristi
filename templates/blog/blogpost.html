@@ -2,7 +2,7 @@
 {% block title %}{{post.title}} from Arristi.in{% endblock %}
 {% block blogcolor %}red{% endblock %}
 {% block body %}
-<div class="container">
+<div class="container mt-3">
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -10,18 +10,20 @@
             <li class="breadcrumb-item"><a href="/blog">Blogs</a></li>
             <li class="breadcrumb-item"><a href="/blog/{{link}}">{{bCrumb}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{post.title|truncatechars:10}}</li>
-<!--            <li class="breadcrumb-item active" aria-current="page">{{title|slice:10}} ...</li>-->
+            <!--            <li class="breadcrumb-item active" aria-current="page">{{title|slice:10}} ...</li>-->
         </ol>
     </nav>
 
     <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-8 blog-main">
+<!--        <div class="row">-->
+<!--            <div class="col-md-8 blog-main">-->
                 <h3 class="pb-2  font-italic">
                     {{post.title}}
                 </h3>
-                <div class="fb-like " data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
-                <p class="blog-post-meta pb-1 mb-4 border-bottom">{{post.timeStamp}} by <a href="#">{{post.author}}</a></p>
+                <div class="fb-like " data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width=""
+                     data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
+                <p class="blog-post-meta pb-1 mb-4 border-bottom">{{post.timeStamp}} by <a href="#">{{post.author}}</a>
+                </p>
 
                 <div class="blog-post">
 
@@ -29,29 +31,199 @@
                     {{post.content}}
                     {% endautoescape %}
 
-<!--                    Here will show Facebook Comments:-->
-                    <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-numposts="2" data-width=""></div>
-                    
-                </div><!-- /.blog-post -->                              
-            </div><!-- /.blog-main -->
+                    <!--                    Here will show Facebook Comments:-->
+                    <!--                    <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-numposts="2" data-width=""></div>-->
+
+                </div><!-- /.blog-post -->
+<!--            </div>&lt;!&ndash; /.blog-main &ndash;&gt;-->
+
+<!--            <aside class="col-md-4 blog-sidebar">-->
+<!--                    <div class="p-4 mb-3 bg-light rounded">-->
+<!--                        <h4 class="font-italic">About</h4>-->
+<!--                        <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it-->
+<!--                            to-->
+<!--                            check the strength of your password.</p>-->
+<!--                    </div>-->
+<!--                    <div class="p-4">-->
+<!--                        <h4 class="font-italic">Contact Us On:</h4>-->
+<!--                        <ol class="list-unstyled">-->
+<!--                            <li><a href="#">GitHub</a></li>-->
+<!--                            <li><a href="#">Google Plus</a></li>-->
+<!--                            <li><a href="#">Twitter</a></li>-->
+<!--                            <li><a href="#">Facebook</a></li>-->
+<!--                        </ol>-->
+<!--                    </div>-->
+<!--                </aside>&lt;!&ndash; /.blog-sidebar &ndash;&gt;-->
+
+            <div class="container my-5">
+                <h3>Comments ({{comments.count}})</h3>
+                {% if user.is_authenticated %}
+                <div class="my-2">
+                    <form action="/blog/postcomment" method="post">{% csrf_token %}
+                        <div class="form-group">
+                            <label>Post a comment now</label>
+                            <input type="text" class="form-control" name="comment"
+                                   placeholder="Enter your comment here">
+                        </div>
+                        <input type="hidden" name="postid" value="{{post.post_id}}">
+                        <input type="hidden" name="parentsno" value="">
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+                </div>
+                {% else %}
+                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#login">
+                    LogIn
+                </button>
+                <h6>Please login to post a comment</h6>
+                {% endif %}
+
+                {% for comment in comments%}
+                {% load humanize %}
+
+                <div class="row my-3 border border-success">
+                    <div class="col-md-1">
+                        <img class="rounded mx-auto m-2 d-block w-100 border border-dark"
+                             src="/media/blog/images/user.png">
+                    </div>
+                    <div class="col-md-11"><b>{{comment.user.username}}</b>
+                        <div>
+                            <small class="text-muted badge badge-warning">{{comment.timestamp|naturaltime}}</small>
+                        </div>
+                        <div>
+                            <p>{{comment.comment}}</p>
+                        </div>
+
+                        <div>
+                            <!--                        <div class="reply mx-0">-->
+                            {% if user.is_authenticated %}
+                            <button class="btn btn-primary btn-sm mb-2" type="button" data-toggle="collapse"
+                                    data-target="#replybox{{comment.sno}}" aria-expanded="false"
+                                    aria-controls="replybox{{comment.sno}}">
+                                Reply
+                                <!--                                ({{replies.count}})-->
+                            </button>
+
+                            <div class="collapse mb-2" id="replybox{{comment.sno}}">
+                                <div class="card card-body">
+                                    <form action="/blog/postcomment" method="post"> {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>Post a reply now</label>
+                                            <input type="text" class="form-control" name="comment"
+                                                   placeholder="Enter your reply here">
+                                            <input type="hidden" name="parentsno" value="{{comment.sno}}">
+                                        </div>
+                                        <input type="hidden" name="postid" value="{{post.post_id}}">
+                                        <button type="submit" class="btn btn-primary">Post Reply</button>
+                                    </form>
+                                </div>
+
+                                <div class="replies my-2">
+                                    {% load extra %}
+                                    {% for reply in replydic|get_val:comment.sno %}
+                                    <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">
+                                        <div class="col-md-1">
+                                            <img class="rounded mx-auto m-2 d-block w-75 border border-dark"
+                                                 src="/media/blog/images/user.png">
+                                        </div>
+                                        <div class="col-md-11">
+                                            <b>{{reply.user.username}}</b>
+                                            <div>
+                                                <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>
+                                            </div>
+                                            <div>
+                                                <p>{{reply.comment}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            {% else %}
+                            <div>
+                                <button type="button" class="btn btn-primary btn-sm m-2" data-toggle="modal"
+                                        data-target="#login">
+                                    LogIn to reply
+                                </button>
+
+                                <button class="btn btn-primary btn-sm m-2" type="button" data-toggle="collapse"
+                                        data-target="#replybox1{{comment.sno}}" aria-expanded="false"
+                                        aria-controls="replybox1{{comment.sno}}">
+                                    View reply
+                                </button>
+
+                                <div class="collapse mb-2" id="replybox1{{comment.sno}}">
+                                    <div class="replies my-2">
+                                        {% load extra %}
+                                        {% for reply in replydic|get_val:comment.sno %}
+                                        <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">
+                                            <div class="col-md-1">
+                                                <img class="rounded mx-auto m-2 d-block w-75 border border-dark"
+                                                     src="/media/blog/images/user.png">
+                                            </div>
+                                            <div class="col-md-11">
+                                                <b>{{reply.user.username}}</b>
+                                                <div>
+                                                    <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>
+                                                </div>
+                                                <div>
+                                                    <p>{{reply.comment}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endif %}
+
+                            <!--                            <div class="replies my-2">-->
+                            <!--                                {% load extra %}-->
+                            <!--                                {% for reply in replydic|get_val:comment.sno %}-->
+                            <!--                                <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">-->
+                            <!--                                    <div class="col-md-1">-->
+                            <!--                                        <img class="rounded mx-auto m-2 d-block w-75 border border-dark"-->
+                            <!--                                             src="/media/blog/images/user.png">-->
+                            <!--                                    </div>-->
+                            <!--                                    <div class="col-md-11">-->
+                            <!--                                        <b>{{reply.user.username}}</b>-->
+                            <!--                                        <div>-->
+                            <!--                                            <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div>-->
+                            <!--                                            <p>{{reply.comment}}</p>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                {% endfor %}-->
+                            <!--                            </div>-->
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
 
 
-            <aside class="col-md-4 blog-sidebar">
-                <div class="p-4 mb-3 bg-light rounded">
-                    <h4 class="font-italic">About</h4>
-                    <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it to check the strength of your password.</p>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-italic">Contact Us On:</h4>
-                    <ol class="list-unstyled">
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">Google Plus</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Facebook</a></li>
-                    </ol>
-                </div>
-            </aside><!-- /.blog-sidebar -->
-        </div><!-- /.row -->
+<!--                <aside class="col-md-4 blog-sidebar">-->
+<!--                    <div class="p-4 mb-3 bg-light rounded">-->
+<!--                        <h4 class="font-italic">About</h4>-->
+<!--                        <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it-->
+<!--                            to-->
+<!--                            check the strength of your password.</p>-->
+<!--                    </div>-->
+<!--                    <div class="p-4">-->
+<!--                        <h4 class="font-italic">Contact Us On:</h4>-->
+<!--                        <ol class="list-unstyled">-->
+<!--                            <li><a href="#">GitHub</a></li>-->
+<!--                            <li><a href="#">Google Plus</a></li>-->
+<!--                            <li><a href="#">Twitter</a></li>-->
+<!--                            <li><a href="#">Facebook</a></li>-->
+<!--                        </ol>-->
+<!--                    </div>-->
+<!--                </aside>&lt;!&ndash; /.blog-sidebar &ndash;&gt;-->
+            </div>
+<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
     </main>
 </div>
 {% endblock %}

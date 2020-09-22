@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from blog.models import Blogpost
 
-# Create your views here.
+# HTML Pages:
 def index(request):
     return render(request, 'home/index.html')
 
@@ -50,6 +50,13 @@ def search(request):
     dic = {'matchedposts':matchedposts, 'nPosts': count, 'query':query}
     return render(request, 'home/search.html', dic)
 
+def privacy(request):
+    return render(request, 'home/privacy.html')
+
+def terms(request):
+    return render(request, 'home/terms.html')
+
+# Authentication APIs
 def signup(request):
     if request.method == 'POST':
         # Get the post parameters
@@ -155,9 +162,3 @@ def Logout(request):
         return redirect("index")
     else:
         return HttpResponse("404 error")
-
-def privacy(request):
-    return render(request, 'home/privacy.html')
-
-def terms(request):
-    return render(request, 'home/terms.html')

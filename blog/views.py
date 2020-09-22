@@ -1,5 +1,7 @@
-from django.shortcuts import render, HttpResponse
-from .models import Blogpost
+from django.shortcuts import render, HttpResponse, redirect
+from .models import Blogpost, PostComment
+from django.contrib import messages
+from blog.templatetags import extra
 
 def index(request):
     return render(request, 'blog/bloghome.html')
@@ -25,14 +27,43 @@ def blogslug(request,postslug):
         "slugpost = Blogpost.objects.filter(slug=postslug)[0]" or 
         "slugpost = Blogpost.objects.filter(slug=postslug).first()" 
     '''
+    comments = PostComment.objects.filter(post=slugpost, parent=None)
+    replies = PostComment.objects.filter(post=slugpost).exclude(parent=None)
+
+    replydic = {}
+    for relpy in replies:
+        if relpy.parent.sno not in replydic.keys():
+            replydic[relpy.parent.sno] = [relpy]
+        else:
+            replydic[relpy.parent.sno].append(relpy)
+
     if slugpost.category == 'cs':
         link = 'ethical'
         bCrumb = 'EH'
     elif slugpost.category == 'ai':
         link = 'ai'
         bCrumb = 'AI'
-    return render(request, 'blog/blogpost.html',{'post': slugpost,'bCrumb': bCrumb, 'link': link})
+    dic = {'post': slugpost,'bCrumb': bCrumb, 'link': link, 'comments': comments, 'user': request.user, 'replydic':replydic}
+    return render(request, 'blog/blogpost.html', dic)
 
 # def blogpost(request,id):
 #     post = Blogpost.objects.filter(post_id=id)[0]
 
+def postcomment(request):
+    if request.method == "POST":
+        user = request.user
+        postid = request.POST['postid']
+        comment = request.POST['comment']
+        post = Blogpost.objects.get(post_id=postid)
+        parentsno = request.POST['parentsno']
+        if parentsno == "" :
+            comment = PostComment(user=user, post=post, comment=comment)
+            comment.save()
+            messages.success(request, "Your comment has been posted successfully!")
+        else:
+            parent = PostComment.objects.get(sno=parentsno)
+            comment = PostComment(user=user, post=post, comment=comment, parent=parent)
+            comment.save()
+            messages.success(request, "Your reply has been posted successfully!")
+
+    return redirect(f"/blog/blogpost/{post.slug}")
