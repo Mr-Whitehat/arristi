@@ -18,10 +18,12 @@
     <div class="row my-2">
         {% for item in csposts %}
         <div class="col-md-4 my-2">
-            <div class="card" style="width: 18rem;">
+            <div class="card">
+<!--            style="width: 18rem;-->
                 <a class="text-dark" href="/blog/blogpost/{{item.slug}}">
-                    <img src="/media/{{item.thumbnail}}" class="card-img-top" style="width: 18rem; height: 10rem;"
-                         alt="..."></a>
+<!--                    <img src="https://source.unsplash.com/1600x900/?hacking,cyber security" class="card-img-top"></a>-->
+                                    <img src="/media/{{item.thumbnail}}" class="card-img-top" alt="..."></a>
+<!--                style="width: 18rem; height: 10rem;"-->
                 <div class="card-body">
                     <a class="text-dark" href="/blog/blogpost/{{item.slug}}">
                         <h5 class="card-title">{{item.title|slice:35}}..</h5></a>

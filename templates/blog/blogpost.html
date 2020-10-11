@@ -15,9 +15,9 @@
     </nav>
 
     <main role="main" class="container">
-<!--        <div class="row">-->
-<!--            <div class="col-md-8 blog-main">-->
-                <h3 class="pb-2  font-italic">
+        <div class="row">
+            <div class="col-md-8 blog-main mb-3" style="background-color: #fff6e6;">
+                <h3 class="pb-2 display-4 font-italic">
                     {{post.title}}
                 </h3>
                 <div class="fb-like " data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width=""
@@ -35,124 +35,69 @@
                     <!--                    <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-numposts="2" data-width=""></div>-->
 
                 </div><!-- /.blog-post -->
-<!--            </div>&lt;!&ndash; /.blog-main &ndash;&gt;-->
-
-<!--            <aside class="col-md-4 blog-sidebar">-->
-<!--                    <div class="p-4 mb-3 bg-light rounded">-->
-<!--                        <h4 class="font-italic">About</h4>-->
-<!--                        <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it-->
-<!--                            to-->
-<!--                            check the strength of your password.</p>-->
-<!--                    </div>-->
-<!--                    <div class="p-4">-->
-<!--                        <h4 class="font-italic">Contact Us On:</h4>-->
-<!--                        <ol class="list-unstyled">-->
-<!--                            <li><a href="#">GitHub</a></li>-->
-<!--                            <li><a href="#">Google Plus</a></li>-->
-<!--                            <li><a href="#">Twitter</a></li>-->
-<!--                            <li><a href="#">Facebook</a></li>-->
-<!--                        </ol>-->
-<!--                    </div>-->
-<!--                </aside>&lt;!&ndash; /.blog-sidebar &ndash;&gt;-->
-
-            <div class="container my-5">
-                <h3>Comments ({{comments.count}})</h3>
-                {% if user.is_authenticated %}
-                <div class="my-2">
-                    <form action="/blog/postcomment" method="post">{% csrf_token %}
-                        <div class="form-group">
-                            <label>Post a comment now</label>
-                            <input type="text" class="form-control" name="comment"
-                                   placeholder="Enter your comment here">
-                        </div>
-                        <input type="hidden" name="postid" value="{{post.post_id}}">
-                        <input type="hidden" name="parentsno" value="">
-                        <button type="submit" class="btn btn-primary">Comment</button>
-                    </form>
-                </div>
-                {% else %}
-                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#login">
-                    LogIn
-                </button>
-                <h6>Please login to post a comment</h6>
-                {% endif %}
-
-                {% for comment in comments%}
-                {% load humanize %}
-
-                <div class="row my-3 border border-success">
-                    <div class="col-md-1">
-                        <img class="rounded mx-auto m-2 d-block w-100 border border-dark"
-                             src="/media/blog/images/user.png">
+                <!--            </div>&lt;!&ndash; /.blog-main &ndash;&gt;-->
+                <div class="container my-5">
+                    <h3>Comments ({{comments.count}})</h3>
+                    {% if user.is_authenticated %}
+                    <div class="my-2">
+                        <form action="/blog/postcomment" method="post">{% csrf_token %}
+                            <div class="form-group">
+                                <label>Post a comment now</label>
+                                <input type="text" class="form-control" name="comment"
+                                       placeholder="Enter your comment here">
+                            </div>
+                            <input type="hidden" name="postid" value="{{post.post_id}}">
+                            <input type="hidden" name="parentsno" value="">
+                            <button type="submit" class="btn btn-primary">Comment</button>
+                        </form>
                     </div>
-                    <div class="col-md-11"><b>{{comment.user.username}}</b>
-                        <div>
-                            <small class="text-muted badge badge-warning">{{comment.timestamp|naturaltime}}</small>
+                    {% else %}
+                    <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#login">
+                        LogIn
+                    </button>
+                    <h6>Please login to post a comment</h6>
+                    {% endif %}
+
+                    {% for comment in comments%}
+                    {% load humanize %}
+
+                    <div class="row my-3 border border-success">
+                        <div class="col-md-1">
+                            <img class="rounded mx-auto m-2 d-block w-100 border border-dark"
+                                 src="/media/blog/images/user.png">
                         </div>
-                        <div>
-                            <p>{{comment.comment}}</p>
-                        </div>
-
-                        <div>
-                            <!--                        <div class="reply mx-0">-->
-                            {% if user.is_authenticated %}
-                            <button class="btn btn-primary btn-sm mb-2" type="button" data-toggle="collapse"
-                                    data-target="#replybox{{comment.sno}}" aria-expanded="false"
-                                    aria-controls="replybox{{comment.sno}}">
-                                Reply
-                                <!--                                ({{replies.count}})-->
-                            </button>
-
-                            <div class="collapse mb-2" id="replybox{{comment.sno}}">
-                                <div class="card card-body">
-                                    <form action="/blog/postcomment" method="post"> {% csrf_token %}
-                                        <div class="form-group">
-                                            <label>Post a reply now</label>
-                                            <input type="text" class="form-control" name="comment"
-                                                   placeholder="Enter your reply here">
-                                            <input type="hidden" name="parentsno" value="{{comment.sno}}">
-                                        </div>
-                                        <input type="hidden" name="postid" value="{{post.post_id}}">
-                                        <button type="submit" class="btn btn-primary">Post Reply</button>
-                                    </form>
-                                </div>
-
-                                <div class="replies my-2">
-                                    {% load extra %}
-                                    {% for reply in replydic|get_val:comment.sno %}
-                                    <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">
-                                        <div class="col-md-1">
-                                            <img class="rounded mx-auto m-2 d-block w-75 border border-dark"
-                                                 src="/media/blog/images/user.png">
-                                        </div>
-                                        <div class="col-md-11">
-                                            <b>{{reply.user.username}}</b>
-                                            <div>
-                                                <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>
-                                            </div>
-                                            <div>
-                                                <p>{{reply.comment}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
+                        <div class="col-md-11"><b>{{comment.user.username}}</b>
+                            <div>
+                                <small class="text-muted badge badge-warning">{{comment.timestamp|naturaltime}}</small>
+                            </div>
+                            <div>
+                                <p>{{comment.comment}}</p>
                             </div>
 
-                            {% else %}
                             <div>
-                                <button type="button" class="btn btn-primary btn-sm m-2" data-toggle="modal"
-                                        data-target="#login">
-                                    LogIn to reply
+                                <!--                        <div class="reply mx-0">-->
+                                {% if user.is_authenticated %}
+                                <button class="btn btn-primary btn-sm mb-2" type="button" data-toggle="collapse"
+                                        data-target="#replybox{{comment.sno}}" aria-expanded="false"
+                                        aria-controls="replybox{{comment.sno}}">
+                                    Reply {{replydic|length}}
+                                    <!--                                ({{replies.count}})-->
                                 </button>
 
-                                <button class="btn btn-primary btn-sm m-2" type="button" data-toggle="collapse"
-                                        data-target="#replybox1{{comment.sno}}" aria-expanded="false"
-                                        aria-controls="replybox1{{comment.sno}}">
-                                    View reply
-                                </button>
+                                <div class="collapse mb-2" id="replybox{{comment.sno}}">
+                                    <div class="card card-body">
+                                        <form action="/blog/postcomment" method="post"> {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>Post a reply now</label>
+                                                <input type="text" class="form-control" name="comment"
+                                                       placeholder="Enter your reply here">
+                                                <input type="hidden" name="parentsno" value="{{comment.sno}}">
+                                            </div>
+                                            <input type="hidden" name="postid" value="{{post.post_id}}">
+                                            <button type="submit" class="btn btn-primary">Post Reply</button>
+                                        </form>
+                                    </div>
 
-                                <div class="collapse mb-2" id="replybox1{{comment.sno}}">
                                     <div class="replies my-2">
                                         {% load extra %}
                                         {% for reply in replydic|get_val:comment.sno %}
@@ -175,55 +120,111 @@
                                     </div>
                                 </div>
 
+                                {% else %}
+                                <div>
+                                    <button type="button" class="btn btn-primary btn-sm m-2" data-toggle="modal"
+                                            data-target="#login">
+                                        LogIn to reply
+                                    </button>
+
+                                    <button class="btn btn-primary btn-sm m-2" type="button" data-toggle="collapse"
+                                            data-target="#replybox1{{comment.sno}}" aria-expanded="false"
+                                            aria-controls="replybox1{{comment.sno}}">
+                                        View reply {{replydic|length}}
+                                    </button>
+
+                                    <div class="collapse mb-2" id="replybox1{{comment.sno}}">
+                                        <div class="replies my-2">
+                                            {% load extra %}
+                                            {% for reply in replydic|get_val:comment.sno %}
+                                            <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">
+                                                <div class="col-md-1">
+                                                    <img class="rounded mx-auto m-2 d-block w-75 border border-dark"
+                                                         src="/media/blog/images/user.png">
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <b>{{reply.user.username}}</b>
+                                                    <div>
+                                                        <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>
+                                                    </div>
+                                                    <div>
+                                                        <p>{{reply.comment}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {% endif %}
+
+                                <!--                            <div class="replies my-2">-->
+                                <!--                                {% load extra %}-->
+                                <!--                                {% for reply in replydic|get_val:comment.sno %}-->
+                                <!--                                <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">-->
+                                <!--                                    <div class="col-md-1">-->
+                                <!--                                        <img class="rounded mx-auto m-2 d-block w-75 border border-dark"-->
+                                <!--                                             src="/media/blog/images/user.png">-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="col-md-11">-->
+                                <!--                                        <b>{{reply.user.username}}</b>-->
+                                <!--                                        <div>-->
+                                <!--                                            <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div>-->
+                                <!--                                            <p>{{reply.comment}}</p>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                {% endfor %}-->
+                                <!--                            </div>-->
+
                             </div>
-                            {% endif %}
-
-                            <!--                            <div class="replies my-2">-->
-                            <!--                                {% load extra %}-->
-                            <!--                                {% for reply in replydic|get_val:comment.sno %}-->
-                            <!--                                <div class="row my-3 border border-primary mr-2 ml-1" style="ml-3">-->
-                            <!--                                    <div class="col-md-1">-->
-                            <!--                                        <img class="rounded mx-auto m-2 d-block w-75 border border-dark"-->
-                            <!--                                             src="/media/blog/images/user.png">-->
-                            <!--                                    </div>-->
-                            <!--                                    <div class="col-md-11">-->
-                            <!--                                        <b>{{reply.user.username}}</b>-->
-                            <!--                                        <div>-->
-                            <!--                                            <small class="text-muted badge badge-warning">{{reply.timestamp|naturaltime}}</small>-->
-                            <!--                                        </div>-->
-                            <!--                                        <div>-->
-                            <!--                                            <p>{{reply.comment}}</p>-->
-                            <!--                                        </div>-->
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                                {% endfor %}-->
-                            <!--                            </div>-->
-
                         </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <aside class="col-md-4 mb-3 blog-sidebar" style="background-color: #c5dbf1!important;">
+                <h3 class="bg-warning mt-2">
+                    <center><b>Popular Posts</b></center>
+                </h3>
+                {% for item in asidepost %}
+                <div class="card my-2">
+                    <!--                     style="width: 18rem;"-->
+                    <a class="text-dark" href="/blog/blogpost/{{item.slug}}">
+                        <img src="/media/{{item.thumbnail}}" class="card-img-top"></a>
+                    <!--                    style="width: 18rem; height: 10rem;"-->
+                    <div class="card-body">
+                        <a class="text-dark" href="/blog/blogpost/{{item.slug}}">
+                            <p style="margin-bottom: auto;"><b>{{item.title}}</b></p></a>
+                        <!--                            <div class="mb-1 text-muted">{{item.timeStamp}}</div>-->
+                        <!--                            <p class="card-text">{{item.descForCard|truncatechars:50}}</p>-->
+                        <!--                            <a href="/blog/blogpost/{{item.slug}}" class="btn btn-primary">Continue reading</a>-->
                     </div>
                 </div>
                 {% endfor %}
 
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="font-italic">About</h4>
+                    <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it
+                        to
+                        check the strength of your password.</p>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-italic">Contact Us On:</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Google Plus</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ol>
+                </div>
+            </aside><!-- /.blog-sidebar -->
 
-<!--                <aside class="col-md-4 blog-sidebar">-->
-<!--                    <div class="p-4 mb-3 bg-light rounded">-->
-<!--                        <h4 class="font-italic">About</h4>-->
-<!--                        <p class="mb-0"><a href="/">Arristi.in</a> is an <em>technical website</em>. You can use it-->
-<!--                            to-->
-<!--                            check the strength of your password.</p>-->
-<!--                    </div>-->
-<!--                    <div class="p-4">-->
-<!--                        <h4 class="font-italic">Contact Us On:</h4>-->
-<!--                        <ol class="list-unstyled">-->
-<!--                            <li><a href="#">GitHub</a></li>-->
-<!--                            <li><a href="#">Google Plus</a></li>-->
-<!--                            <li><a href="#">Twitter</a></li>-->
-<!--                            <li><a href="#">Facebook</a></li>-->
-<!--                        </ol>-->
-<!--                    </div>-->
-<!--                </aside>&lt;!&ndash; /.blog-sidebar &ndash;&gt;-->
-            </div>
-<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
+        </div><!-- /.row -->
     </main>
 </div>
 {% endblock %}

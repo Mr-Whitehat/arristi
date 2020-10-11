@@ -22,6 +22,7 @@ def ethical(request):
 
 def blogslug(request,postslug):
     slugpost = Blogpost.objects.filter(slug=postslug)[0]
+    asidepost = Blogpost.objects.all()
     ''' slugpost = Blogpost.objects.filter(slug=postslug) will give a Query set, check by (print(slugpost));
         but we require its first Object, so here we can use 
         "slugpost = Blogpost.objects.filter(slug=postslug)[0]" or 
@@ -43,7 +44,8 @@ def blogslug(request,postslug):
     elif slugpost.category == 'ai':
         link = 'ai'
         bCrumb = 'AI'
-    dic = {'post': slugpost,'bCrumb': bCrumb, 'link': link, 'comments': comments, 'user': request.user, 'replydic':replydic}
+    print(asidepost)
+    dic = {'post': slugpost,'bCrumb': bCrumb, 'link': link, 'comments': comments, 'user': request.user, 'replydic':replydic,'asidepost':asidepost}
     return render(request, 'blog/blogpost.html', dic)
 
 # def blogpost(request,id):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
@@ -20,6 +21,12 @@ class Blogpost(models.Model):
 
     def __str__(self):
         return self.category + '-> ' + self.title + ' by ' + self.author
+
+    def get_absolute_url(self):
+        # pass
+        # reverse(/blog/blogpost/
+        return reverse("about") #, args=[str(self.post_id)]) # kwargs={"slug": str(self.slug)}) #"post_detail",
+
 
 # sno, comment, user, post, parent, timestamp
 class PostComment(models.Model):
